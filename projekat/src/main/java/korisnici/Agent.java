@@ -25,6 +25,7 @@ public class Agent extends Korisnik{
     @OneToMany
     private List<Rezervacija> rezervacije;
     
+    
     public Agent(){ super(); }
 
 	public String getFirstName() {

@@ -17,6 +17,7 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 	
+   
     @RequestMapping(method = RequestMethod.GET, value = "/login")
     public void redirect(HttpServletResponse response) throws IOException{
         response.sendRedirect("http://localhost:8096/login.html");
