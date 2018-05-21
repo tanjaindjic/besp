@@ -1,13 +1,20 @@
 package service;
 
+import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Service;
+
 @Service
 public class RegisterService {
-    @Autowired
-    private RegKorService regKorService;
-    @Autowired
-    private AdminService adminService;
-    
+	
+	public void redirect(HttpServletResponse response) throws IOException{
+		response.sendRedirect("http://localhost:8096/register.html");
+	}
+
+	public String register(){
+		return "proba register";
+	}
+
 }

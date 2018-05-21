@@ -4,8 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import korisnici.Korisnik;
-
 @Entity
 public class Poruka {
 

@@ -2,7 +2,6 @@ package Model;
 
 import Model.Enums.DodatneUsluge;
 import Model.Enums.TipSmestaja;
-import korisnici.Korisnik;
 
 import javax.persistence.*;
 import java.util.List;

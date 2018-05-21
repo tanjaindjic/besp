@@ -12,20 +12,18 @@ import org.springframework.web.bind.annotation.RestController;
 import service.LoginService;
 
 @RestController
-public class LoginController {	
-
-    @Autowired
-    private LoginService loginService;
+public class LoginController {
 	
-   
-    @RequestMapping(method = RequestMethod.GET, value = "/login")
+	@Autowired
+	private LoginService loginService;
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/login")
     public void redirect(HttpServletResponse response) throws IOException{
-        response.sendRedirect("http://localhost:8096/login.html");
+        loginService.redirect(response);
     }
     @RequestMapping(method = RequestMethod.POST, value = "/login") 
     public void login(){
-    	System.out.println("proba logina");
+    	System.out.println(loginService.login());
     }
-    
 
 }

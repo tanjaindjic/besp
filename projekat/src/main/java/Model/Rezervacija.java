@@ -1,7 +1,6 @@
 package Model;
 
 import Model.Enums.StatusRezevacije;
-import korisnici.Korisnik;
 
 import javax.persistence.*;
 import java.util.Date;

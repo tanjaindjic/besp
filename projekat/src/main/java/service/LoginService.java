@@ -1,16 +1,19 @@
 package service;
 
+import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Service;
 
 @Service
 public class LoginService {
+	
+	public void redirect(HttpServletResponse response) throws IOException{
+		response.sendRedirect("http://localhost:8096/login.html");
+	}
 
-    @Autowired
-    private RegKorService regKorService;
-    @Autowired
-    private AdminService adminService;
-    
-
+	public String login(){
+		return "proba logina";
+	}
 }
