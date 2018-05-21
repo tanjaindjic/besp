@@ -11,22 +11,11 @@
         var user;
         $scope.message="";
         var init = function (){
-        	
-     
-        	/*$http({
-                method: 'GET',
-                url: 'http://localhost:8096/#!/user/'
-
-              }).then(function successCallback(response) {
-                  $scope.users = response.data;
-              });    */
-              
         	if($cookies.get('user'))
                 $location.path("home")
-        }
-        
+        };
         init();
-        //alert($scope.users.length)
+        
         $scope.indexFunc = function(){
         	$location.path("home");
         }

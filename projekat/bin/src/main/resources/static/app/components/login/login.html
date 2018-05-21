@@ -1,0 +1,33 @@
+<div>
+    <form>
+      <span>
+            <br><p style="color:red">{{message}}</p><br>
+        </span>
+        <table>
+        	
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" id="username" name="username" ng-model="username"></td>
+            </tr>
+
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" id="pass" name="pass" ng-model="pass"></td>
+            </tr>
+
+            <tr>
+            	   <td></td>
+                <td style="width:100px; text-align:center"><button ng-click="indexFunc()">Back</button>
+               <button ng-click="prijavaFunc(username, pass)">Login</button></td>
+               
+            
+            </tr>
+            <tr><td><p></p></td></tr>
+            <tr>
+                <td colspan="2" style="text-align:left"><br>Don't have an Account? <a ng-href="#!/register">Register here</a></td>
+            </tr>
+
+        </table>
+    </form>
+
+   </div>
