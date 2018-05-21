@@ -25,7 +25,7 @@ public class Korisnik {
     private boolean aktiviran;
 
     @Enumerated(EnumType.STRING)
-    private Role tip;
+    private Role role;
 
     @Enumerated(EnumType.STRING)
     private StatusKorisnika statusNaloga;
@@ -91,12 +91,12 @@ public class Korisnik {
         this.aktiviran = aktiviran;
     }
 
-    public Role getTip() {
-        return tip;
+    public Role getRole() {
+        return role;
     }
 
-    public void setTip(Role tip) {
-        this.tip = tip;
+    public void setRole(Role tip) {
+        this.role = tip;
     }
 
     public StatusKorisnika getStatusNaloga() {
