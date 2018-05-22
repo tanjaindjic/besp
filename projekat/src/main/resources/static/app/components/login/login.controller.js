@@ -13,20 +13,22 @@
         var init = function (){
         	
      
-        	/*$http({
+        	$http({
                 method: 'GET',
-                url: 'http://localhost:8096/#!/user/'
+                url: 'http://localhost:8096/user/'
 
               }).then(function successCallback(response) {
+            	  alert(response.data)
                   $scope.users = response.data;
-              });    */
+            	  alert($scope.users.length)
+              });    
               
         	if($cookies.get('user'))
                 $location.path("home")
         }
         
         init();
-        //alert($scope.users.length)
+       
         $scope.indexFunc = function(){
         	$location.path("home");
         }

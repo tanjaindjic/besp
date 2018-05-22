@@ -19,6 +19,7 @@ public class LoginController {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/login")
     public void redirect(HttpServletResponse response) throws IOException{
+		System.out.println("uso u kontroler");
         loginService.redirect(response);
     }
     @RequestMapping(method = RequestMethod.POST, value = "/login") 

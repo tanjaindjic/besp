@@ -19,7 +19,8 @@ public class KorisnikController {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/user")
 	public List<Korisnik> getKorisnici(){
-		System.out.println("usao po sve korisnike: " + korisnikService.getAllKorisnik().size());
+		System.out.println("usao po sve korisnike: ");
+		System.out.println(korisnikService.getAllKorisnik().size());
 		return korisnikService.getAllKorisnik();
 	}
 	

@@ -36,7 +36,8 @@ public class StartData {
          k.setPIB("");
          k.setIzdaje(new ArrayList<>());
          k.setRezervacije(new ArrayList<>());
-         //korisnikRepo.save(k);
+         korisnikRepo.save(k);
          System.out.println("dodao admira");
+         System.out.println("admir: " + korisnikRepo.findByUsername("admin").getUsername());
 	 }
 }
