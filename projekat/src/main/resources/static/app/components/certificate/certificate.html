@@ -1,0 +1,87 @@
+<div>
+	<div>
+		<h2>Create a new certificate:</h2>
+		<form  name="createCertificateForm">
+		<table>
+			<tr>
+				<td width='10%'></td>
+				<td width='90%'><input type="number" placeholder="Serial number*" required/></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="password"	placeholder="Password*" required/><br><hr/></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="checkbox" id="self" ng-model='self'><label>Self Signed</label></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="number" placeholder="Issuer Serial number*" ng-disabled="self" ng-required="self"/></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="password" placeholder="Issuer Password*" ng-disabled="self" ng-required="self"/><br><hr/></td>
+			</tr>
+			
+			<tr>
+				<td></td>
+				<td><input type="text" placeholder="Common Name*" required/></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="text" placeholder="Surname*" required/></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="text" 	placeholder="Given Name*" required/></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="text" placeholder="Email Address*" required/></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="text" placeholder="Country Name*" required/></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="text" placeholder="Organization Name*" required/></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="text" 	placeholder="Organizational Unit Name*" required/></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="text" placeholder="UID*" required/></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<div>
+						<input type="checkbox" id="isCA" ng-disabled="self">
+						<label for="isCA">Certificate Authority</label>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>From*</td>
+				<td><input type="date" id="fromDate" required/></td>
+			</tr>
+			<tr>
+				<td>To*</td>
+				<td><input type="date" id="toDate" required/></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" value="Create" ng-click="createCertificateForm.$valid && $crc.send()"/></td>
+			</tr>
+		</table>
+		</form>
+		<hr />
+		<p>
+			{{status}}
+		</p>
+	</div>
+</div>

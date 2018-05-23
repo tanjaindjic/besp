@@ -31,6 +31,12 @@
 			templateUrl: 'app/components/register/register.html',
 			controller: 'registerController',
 			controllerAs: 'rc'
+		})
+		.state('core.certificate', {
+			url: 'certificate',
+			templateUrl: 'app/components/certificate/certificate.html',
+			controller: 'certificateController',
+			controllerAs: 'crc'
 		});
 		
     }]);
