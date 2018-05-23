@@ -12,16 +12,6 @@
         $scope.message="";
         var init = function (){
         	
-     
-        	$http({
-                method: 'GET',
-                url: 'http://localhost:8096/user/'
-
-              }).then(function successCallback(response) {
-            	  alert(response.data)
-                  $scope.users = response.data;
-            	  alert($scope.users.length)
-              });    
               
         	if($cookies.get('user'))
                 $location.path("home")
@@ -44,7 +34,7 @@
         	}
             $http({
               method: 'POST',
-              url: 'http://localhost:8096/#!/login/',
+              url: 'http://localhost:8096/login/',
               data: data
             }).then(function successCallback(response) {
                 var user = response.data;
