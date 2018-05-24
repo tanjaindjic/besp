@@ -10,10 +10,11 @@
         var hc = this;
         hc.home = "Home";
         var user;
+        $scope.logged = false;
         var init = function (){
 
-           /* if($cookies.get('user'))
-                $location.path("regKorHome")*/
+            if($cookies.get('user'))
+                $scope.logged = true;
             };
             init();
 
