@@ -11,6 +11,7 @@
         var init = function (){
         	$scope.self=false;
         	$scope.status = "";
+        	$scope.cert = {};
      
         /*	$http({
                 method: 'GET',
@@ -28,6 +29,22 @@
         
         init();
        
+        crc.send = function(){
+        	$scope.cert.issuerName="";
+        	$scope.cert.startDate=$scope.dateFrom;
+        	$scope.cert.endDate=$scope.dateTo;
+        	var data = $scope.cert;
+        	$http({
+                method: 'POST',
+                url: 'http://localhost:8096/certificates/',
+                data: data
+              }).then(function successCallback(response) {
+            	  alert(response.data)
+                  $scope.users = response.data;
+              });  
+        	
+        	
+        }
        
         
     }

@@ -11,9 +11,6 @@ import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
 import java.util.Date;
 
-/**
- * Created by Ivan V. on 03-Apr-18
- */
 public class CertificateDTO {
     private String commonName;
     private String surname;

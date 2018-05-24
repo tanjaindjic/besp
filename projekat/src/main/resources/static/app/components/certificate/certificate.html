@@ -5,11 +5,7 @@
 		<table>
 			<tr>
 				<td width='10%'></td>
-				<td width='90%'><input type="number" placeholder="Serial number*" required/></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td><input type="password"	placeholder="Password*" required/><br><hr/></td>
+				<td width='90%'><input type="number" placeholder="Serial number*" ng-model='cert.serialNumber' required /><br><hr/><td>
 			</tr>
 			<tr>
 				<td></td>
@@ -17,69 +13,64 @@
 			</tr>
 			<tr>
 				<td></td>
-				<td><input type="number" placeholder="Issuer Serial number*" ng-disabled="self" ng-required="self"/></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td><input type="password" placeholder="Issuer Password*" ng-disabled="self" ng-required="self"/><br><hr/></td>
+				<td><input type="number" placeholder="Issuer Serial number*" ng-model='cert.issuerSerialNumber' ng-disabled="self" ng-required="self"/><br><hr/></td>
 			</tr>
 			
 			<tr>
 				<td></td>
-				<td><input type="text" placeholder="Common Name*" required/></td>
+				<td><input type="text" placeholder="Common Name*" ng-model='cert.commonName' required/></td>
 			</tr>
 			<tr>
 				<td></td>
-				<td><input type="text" placeholder="Surname*" required/></td>
+				<td><input type="text" placeholder="Surname*" ng-model='cert.surname' required/></td>
 			</tr>
 			<tr>
 				<td></td>
-				<td><input type="text" 	placeholder="Given Name*" required/></td>
+				<td><input type="text" 	placeholder="Given Name*" ng-model='cert.givenName' required/></td>
 			</tr>
 			<tr>
 				<td></td>
-				<td><input type="text" placeholder="Email Address*" required/></td>
+				<td><input type="text" placeholder="Email Address*" ng-model='cert.email' required/></td>
 			</tr>
 			<tr>
 				<td></td>
-				<td><input type="text" placeholder="Country Name*" required/></td>
+				<td><input type="text" placeholder="Country Name*" ng-model='cert.country' required/></td>
 			</tr>
 			<tr>
 				<td></td>
-				<td><input type="text" placeholder="Organization Name*" required/></td>
+				<td><input type="text" placeholder="Organization Name*" ng-model='cert.orgName' required/></td>
 			</tr>
 			<tr>
 				<td></td>
-				<td><input type="text" 	placeholder="Organizational Unit Name*" required/></td>
+				<td><input type="text" 	placeholder="Organizational Unit Name*" ng-model='cert.orgNameUnit' required/></td>
 			</tr>
 			<tr>
 				<td></td>
-				<td><input type="text" placeholder="UID*" required/></td>
+				<td><input type="text" placeholder="UID*" ng-model='cert.uid' required/></td>
 			</tr>
 			<tr>
 				<td></td>
 				<td>
 					<div>
-						<input type="checkbox" id="isCA" ng-disabled="self">
+						<input type="checkbox" id="isCA" ng-disabled="self" ng-model='cert.isCa'>
 						<label for="isCA">Certificate Authority</label>
 					</div>
 				</td>
 			</tr>
 			<tr>
 				<td>From*</td>
-				<td><input type="date" id="fromDate" required/></td>
+				<td><input type="date" id="fromDate" ng-model='dateFrom' required/></td>
 			</tr>
 			<tr>
 				<td>To*</td>
-				<td><input type="date" id="toDate" required/></td>
+				<td><input type="date" id="toDate" ng-model='dateTo' required/></td>
 			</tr>
 			<tr>
 				<td></td>
-				<td><input type="submit" value="Create" ng-click="createCertificateForm.$valid && $crc.send()"/></td>
+				<td><input type="submit" value="Create" ng-click="crc.send() && createCertificateForm.$valid"/><br><hr /></td>
 			</tr>
 		</table>
 		</form>
-		<hr />
 		<p>
 			{{status}}
 		</p>
