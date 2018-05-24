@@ -15,26 +15,18 @@
         $scope.isAgent = false;
         $scope.user = undefined;
     	var init = function(){
-        	userCookie = $cookies.get('user');
-            userId = $cookies.get('id');
-        	if (userCookie && userId){
-                $scope.logged=true;
-                $http({
-                    method: 'GET',
-                    url: 'http://localhost:8096/#!/user/'+userId
-                  }).then(function successCallback(response){
-                	  if(response.data!="")
-                		  $scope.user = response.data;
-                	  alert($scope.user)
-                  });
-                
-        	}else $scope.logged=false;
+        	userCookie = $cookies.getObject('user');
+        	if(userCookie!=undefined){
+        		$scope.logged=true;
+        		console.log("logged: " + $scope.logged + " user: " + userCookie.username);
+        	}
+        	else $scope.logged=false;
 
 
 
         };
         init();
-        console.log("logged: " + $scope.logged + " user: " + userCookie + ", id: " + userId);
+        
 
         $scope.login = function(){
         	$location.path("login")

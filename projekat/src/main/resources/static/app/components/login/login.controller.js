@@ -47,10 +47,13 @@
                   	return;
                   }
                   
-       	
-  	     			$cookies.put("user", user.username, {path: 'core'});
-  	     			$cookies.put("id", user.id, {path: 'core'});
-  	     			console.log("Uspesno logovanje: " + $cookies.get('user') + ", id: " +  $cookies.get('id'))
+                  	var userDTO = {
+                  			"username": user.username, 
+                  			"id": user.id, 
+                  			"role": user.role
+                  	};
+                  	$cookies.putObject('user', userDTO, {path: 'core'});
+  	     			
   	            	$window.location.href = 'http://localhost:8096/';
                   
                   

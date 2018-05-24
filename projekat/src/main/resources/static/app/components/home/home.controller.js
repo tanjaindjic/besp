@@ -9,11 +9,11 @@
     function homeController($location, $scope, $rootScope, $http, $cookies, $sce) {
         var hc = this;
         hc.home = "Home";
-        var user;
+     
         $scope.logged = false;
         var init = function (){
 
-            if($cookies.get('user'))
+            if($cookies.getObject('user'))
                 $scope.logged = true;
             };
             init();
