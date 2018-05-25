@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Service;
 
+import besp.Model.Korisnik;
+
 @Service
 public class RegisterService {
 	
@@ -13,8 +15,8 @@ public class RegisterService {
 		response.sendRedirect("http://localhost:8096/register.html");
 	}
 
-	public String register(){
-		return "proba register";
+	public String register(Korisnik k){
+		return null;
 	}
 
 }
