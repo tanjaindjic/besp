@@ -51,6 +51,7 @@
               }).then(function successCallback(response) {
             	  $scope.status="Certificate made succesfully! SERIAL NUMBER:" + response.data.serialNumber;
             	  crc.showDone();
+        		  $scope.allCerts.push(response.data);
               });  
         	
         	
@@ -61,6 +62,8 @@
         	$scope.isMake=false;
         	$scope.isGet=false;
         	$scope.isRevoke=false;
+        	$scope.showIsRevoked=false;
+        	$scope.showCheckedStatus=false;
         	
         }
         crc.makeNew = function(){
@@ -69,6 +72,8 @@
         	$scope.isMake=true;
         	$scope.isGet=false;
         	$scope.isRevoke=false;
+        	$scope.showIsRevoked=false;
+        	$scope.showCheckedStatus=false;
         	
         }
         crc.getCert = function(){
@@ -77,6 +82,8 @@
         	$scope.isMake=false;
         	$scope.isGet=true;
         	$scope.isRevoke=false;
+        	$scope.showIsRevoked=false;
+        	$scope.showCheckedStatus=false;
         	
         }
         crc.check = function(){
@@ -84,7 +91,9 @@
         	$scope.isCheck=true;
         	$scope.isMake=false;
         	$scope.isGet=false;
-        	$scope.isRevoke=false;        	
+        	$scope.isRevoke=false;    
+        	$scope.showIsRevoked=false;
+        	$scope.showCheckedStatus=false;    	
         }
         crc.revokeCert = function(){
         	$scope.isAll=false;
@@ -92,6 +101,8 @@
         	$scope.isMake=false;
         	$scope.isGet=false;
         	$scope.isRevoke=true;
+        	$scope.showIsRevoked=false;
+        	$scope.showCheckedStatus=false;
         }
         crc.logOut = function(){
         	
@@ -100,10 +111,28 @@
         	
         }
         crc.checkStatus = function(){
-        	
+        	$http({
+                method: 'GET',
+                url: 'http://localhost:8096/certificates/check/'+$scope.checkNumber
+              }).then(function successCallback(response) {
+            	  if(response.data.text=="good")
+            		  $scope.checkedStatus = "status for "+$scope.checkNumber+" : VALID";
+            	  else
+            		  $scope.checkedStatus = "status for "+$scope.checkNumber+" :NOT VALID";
+            	  $scope.showCheckedStatus=true;
+              }); 
         }
         crc.revokeCertificate = function(){
-        	
+        	$http({
+                method: 'GET',
+                url: 'http://localhost:8096/certificates/revoke/'+$scope.revokeNumber
+              }).then(function successCallback(response) {
+            	  if(response.data.text=="good")
+            		  $scope.revokedStatus = "status for "+$scope.checkNumber+" : REVOKED";
+            	  else
+            		  $scope.revokedStatus = "status for "+$scope.checkNumber+" :NOT REVOKED";
+            	  $scope.showIsRevoked=true;
+              }); 
         }
         crc.showDone= function() {			
 		      $scope.showStatus= true;

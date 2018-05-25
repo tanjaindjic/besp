@@ -138,11 +138,11 @@
 		<h2>All Certificates</h2>
 		<table width='100%'>
 			<tr>
-				<th width='30%'>Serial Number</th>
-				<th width='30%'>Common Name</th>
-				<th width='30%'>Organisation Name</th>
+				<th class='thCert'>Serial Number</th>
+				<th class='thCert'>Common Name</th>
+				<th class='thCert'>Organisation Name</th>
 				<th width='10%'></th>
-			</tr>
+			</tr><br><hr />
 			<tr ng-repeat="c in allCerts">
 				<th width='30%'>{{c.serialNumber}}</th>
 				<th width='30%'>{{c.commonName}}</th>

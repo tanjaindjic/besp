@@ -2,11 +2,14 @@ package besp.service;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
@@ -158,7 +161,16 @@ public class CertificateService{
         } catch (CertificateEncodingException e) {
             e.printStackTrace();
         }
-
+        PrintWriter writer;
+		try {
+			writer = new PrintWriter(id+".txt", "UTF-8");
+	        writer.print(sw);
+	        writer.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
         return sw.toString();
     }
 
@@ -177,12 +189,12 @@ public class CertificateService{
         return null;
     }
 
-    public void revoke(String id) {
+    public boolean revoke(String id) {
         X509Certificate certificate = keyStoreService.getCertificate(id);
         List<X509Certificate> certificates = new ArrayList<>();
 
         try {
-            File file = new File("./revocation.crl");
+            File file = new File("./revokeList.crl");
 
             if (!file.exists()) {
                 saveCRL(certificates, file);
@@ -194,7 +206,7 @@ public class CertificateService{
 
             for (X509Certificate cert : certificates) {
                 if (cert.getSerialNumber().equals(certificate.getSerialNumber())) {
-                    return;
+                    return false;
                 }
             }
 
@@ -217,6 +229,7 @@ public class CertificateService{
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return true;
 
     }
 
@@ -248,7 +261,7 @@ public class CertificateService{
     
     public List<X509Certificate> readRevoked() {
         List<X509Certificate> certificates = new ArrayList<>();
-        File file = new File("./revocation.crl");
+        File file = new File("./revokeList.crl");
         ObjectInputStream iis = null;
         try {
             iis = new ObjectInputStream(new FileInputStream(file));
