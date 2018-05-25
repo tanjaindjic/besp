@@ -21,6 +21,8 @@ public class Korisnik {
     private String lastName;
 
     private String password;
+    
+    private String email;
 
     private boolean aktiviran;
 
@@ -138,4 +140,12 @@ public class Korisnik {
     public void setRezervacije(List<Rezervacija> rezervacije) {
         this.rezervacije = rezervacije;
     }
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 }

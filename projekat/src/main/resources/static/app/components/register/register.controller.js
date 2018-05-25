@@ -84,7 +84,7 @@
         			"firstName": fname,
         			"lastName": lname,
         			"email": email,        			
-        	}
+        	};
         	console.log("userName" +  username +
         			"password"+ pass +
         			"ime"+ fname +
@@ -92,7 +92,7 @@
         			"email"+ email)
             $http({
               method: 'POST',
-              url: 'http://localhost:8096/api/register/',
+              url: 'https://localhost:8096/register/',
               data: data
             }).then(function successCallback(response) {
             	if(response.data==""){

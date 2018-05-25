@@ -38,7 +38,7 @@
         $scope.logout = function(){
         	$cookies.remove('user');
         	$cookies.remove('id');
-        	$window.location.href = 'http://localhost:8096/';
+        	$window.location.href = 'https://localhost:8096/';
         }
 
         

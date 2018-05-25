@@ -1,9 +1,12 @@
 package besp.controller;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.bouncycastle.operator.OperatorCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +27,7 @@ public class RegisterController {
 		registerService.redirect(response);
     }
     @RequestMapping(method = RequestMethod.POST, value = "/register") 
-    public void login(@RequestBody Korisnik k){
+    public void login(@RequestBody Korisnik k) throws NoSuchAlgorithmException, NoSuchProviderException, OperatorCreationException, IOException{
     	registerService.register(k);
     }
 }

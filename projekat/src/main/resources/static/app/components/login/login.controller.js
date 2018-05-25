@@ -36,7 +36,7 @@
         		};
         	$http({
                 method: 'POST',
-                url: 'http://localhost:8096/login/',
+                url: 'https://localhost:8096/login/',
                 headers: {'Content-Type': 'application/json'},
                 data: postData                
               }).then(function successCallback(response) {
@@ -54,7 +54,7 @@
                   	};
                   	$cookies.putObject('user', userDTO, {path: 'core'});
   	     			
-  	            	$window.location.href = 'http://localhost:8096/';
+  	            	$window.location.href = 'https://localhost:8096/';
                   
                   
                   }, function errorCallback(response) {
