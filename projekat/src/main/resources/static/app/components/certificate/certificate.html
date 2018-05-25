@@ -1,15 +1,21 @@
 <div>
+	<ul class='ulCer'>
+	  <li class='liCer'><a class="aCer" ng-click='crc.all()'>ALL Certificate</a></li>
+	  <li class='liCer'><a class="aCer" ng-click='crc.makeNew()'>New Certificate</a></li>
+	  <li class='liCer'><a class="aCer" ng-click='crc.getCert()'>Download</a></li>
+	  <li class='liCer'><a class="aCer" ng-click='crc.check()'>Check Status</a></li>
+	  <li class='liCer'><a class="aCer" ng-click='crc.revokeCert()'>Revoke</a></li>
+	  <li class='liLogCer'><a class="aCer" ng-click='crc.logOut()'>Log Out</a></li>
+	</ul>
+</div>
+<div ng-show='isMake'>
 	<div>
-		<h2>Create a new certificate:</h2>
+		<h2>Create a new certificate</h2>
 		<form  name="createCertificateForm">
 		<table>
 			<tr>
 				<td width='10%'></td>
-				<td width='90%'><input type="number" placeholder="Serial number*" ng-model='cert.serialNumber' required /><br><hr/><td>
-			</tr>
-			<tr>
-				<td></td>
-				<td><input type="checkbox" id="self" ng-model='self'><label>Self Signed</label></td>
+				<td width='90%'><input type="checkbox" id="self" ng-model='self'><label>Self Signed</label></td>
 			</tr>
 			<tr>
 				<td></td>
@@ -73,6 +79,80 @@
 		</form>
 		<p ng-show='showStatus'>
 			{{status}}
+		</p>
+	</div>
+</div>
+<div ng-show='isGet'>
+	<div>
+		<h2>Download a new certificate</h2>
+		<table>		
+			<tr>
+				<td width='10%'></td>
+				<td width='90%'><input type="number" placeholder="Serial number*" ng-model='serialNumber' required /><td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" value="Download" ng-click="crc.download()"/><br><hr /></td>
+			</tr>
+		</table>
+	</div>
+</div>
+<div ng-show='isCheck'>
+	<div>
+		<h2>Check Certificate validity</h2>
+		<table>	
+			<tr>
+				<td width='10%'></td>
+				<td width='90%'><input type="number" placeholder="Serial number*" ng-model='checkNumber' required /><td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" value="Check" ng-click="crc.checkStatus()"/><br><hr /></td>
+			</tr>
+		</table>
+		<p ng-show='showCheckedStatus'>
+			{{checkedStatus}}
+		</p>
+	</div>
+</div>
+<div ng-show='isRevoke'>
+	<div>
+		<h2>Revoke Certificate</h2>
+		<table>
+			<tr>
+				<td width='10%'></td>
+				<td width='90%'><input type="number" placeholder="Serial number*" ng-model='revokeNumber' required /><td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" value="Revoke" ng-click="crc.revokeCertificate()"/><br><hr /></td>
+			</tr>
+		</table>
+		<p ng-show='showIsRevoked'>
+			{{revokedStatus}}
+		</p>
+	</div>
+</div>
+<div ng-show='isAll'  width='100%'>
+	<div width='100%'>
+		<h2>All Certificates</h2>
+		<table width='100%'>
+			<tr>
+				<th width='30%'>Serial Number</th>
+				<th width='30%'>Common Name</th>
+				<th width='30%'>Organisation Name</th>
+				<th width='10%'></th>
+			</tr>
+			<tr ng-repeat="c in allCerts">
+				<th width='30%'>{{c.serialNumber}}</th>
+				<th width='30%'>{{c.commonName}}</th>
+				<th width='30%'>{{c.orgName}}</th>
+				<th width='10%'></th>				
+			</tr>
+			
+		</table>
+		<p ng-show='showIsRevoked'>
+			{{revokedStatus}}
 		</p>
 	</div>
 </div>
