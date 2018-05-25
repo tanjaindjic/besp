@@ -187,7 +187,7 @@ public class KeyStoreService{
     
     public boolean saveKeyStore(String fileName, char[] password) {
         try {
-            keyStore.store(new FileOutputStream("keystores/" + fileName), password);
+            keyStore.store(new FileOutputStream(fileName), password);
             return true;
         } catch (KeyStoreException | CertificateException | NoSuchAlgorithmException | IOException e) {
             e.printStackTrace();
@@ -242,7 +242,7 @@ public class KeyStoreService{
 
     
     public void loadKeyStore(String keyStoreFile, String keyStorePassword) {
-        keyStoreFile = "keystores/" + keyStoreFile;
+        keyStoreFile = keyStoreFile;
         try {
             keyStore.load(new FileInputStream(keyStoreFile), keyStorePassword.toCharArray());
         } catch (IOException | NoSuchAlgorithmException | CertificateException e) {

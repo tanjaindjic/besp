@@ -33,7 +33,37 @@ public class CertificateDTO {
 
     }
 
-    public CertificateDTO(Certificate cert) {
+    public CertificateDTO(String commonName, String surname, String orgName,
+			String orgNameUnit, String givenName, String country, String email,
+			boolean isCa, String uid, String serialNumber, Date endDate,
+			Date startDate, int caa, String issuerSerialNumber,
+			String issuerName) {
+		this.commonName = commonName;
+		this.surname = surname;
+		this.orgName = orgName;
+		this.orgNameUnit = orgNameUnit;
+		this.givenName = givenName;
+		this.country = country;
+		this.email = email;
+		this.isCa = isCa;
+		this.uid = uid;
+		this.serialNumber = serialNumber;
+		this.endDate = endDate;
+		this.startDate = startDate;
+		this.caa = caa;
+		this.issuerSerialNumber = issuerSerialNumber;
+		this.issuerName = issuerName;
+	}
+
+	public boolean isCa() {
+		return isCa;
+	}
+
+	public void setCa(boolean isCa) {
+		this.isCa = isCa;
+	}
+
+	public CertificateDTO(Certificate cert) {
 
         try {
             X500Name subjName = new JcaX509CertificateHolder((X509Certificate) cert).getSubject();

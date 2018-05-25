@@ -43,19 +43,12 @@ public class CertificateController {
         return new ResponseEntity<>(certificateDTOS, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CertificateDTO> genCertificate(@RequestBody CertificateDTO dto, Principal principal) {
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<CertificateDTO> genCertificate(@RequestBody CertificateDTO dto){
         if (dto.getCaa() == 1) {
             dto.setIsCa(true);
         } else {
             dto.setIsCa(false);
-        }
-        if (dto.getisCa()) {
-            Korisnik user = korisnikService.getKorisnik(principal.getName());
-            if (user.getRole() != Role.ADMIN) {
-                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-            }
         }
         X509Certificate created = certificateService.generateCertificate(dto);
         if (created != null) {
