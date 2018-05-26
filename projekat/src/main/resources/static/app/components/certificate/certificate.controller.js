@@ -27,7 +27,7 @@
      
         	$http({
                 method: 'GET',
-                url: 'http://localhost:8096/certificates'
+                url: 'https://localhost:8096/certificates'
               }).then(function successCallback(response) {
             	  for(var i=0; i<response.data.length; i++)            		  
             		  $scope.allCerts.push(response.data[i]);
@@ -46,7 +46,7 @@
         	var data = $scope.cert;
         	$http({
                 method: 'POST',
-                url: 'http://localhost:8096/certificates',
+                url: 'https://localhost:8096/certificates',
                 data: data
               }).then(function successCallback(response) {
             	  $scope.status="Certificate made succesfully! SERIAL NUMBER:" + response.data.serialNumber;
@@ -113,7 +113,7 @@
         crc.checkStatus = function(){
         	$http({
                 method: 'GET',
-                url: 'http://localhost:8096/certificates/check/'+$scope.checkNumber
+                url: 'https://localhost:8096/certificates/check/'+$scope.checkNumber
               }).then(function successCallback(response) {
             	  if(response.data.text=="good")
             		  $scope.checkedStatus = "status for "+$scope.checkNumber+" : VALID";
@@ -125,7 +125,7 @@
         crc.revokeCertificate = function(){
         	$http({
                 method: 'GET',
-                url: 'http://localhost:8096/certificates/revoke/'+$scope.revokeNumber
+                url: 'https://localhost:8096/certificates/revoke/'+$scope.revokeNumber
               }).then(function successCallback(response) {
             	  if(response.data.text=="good")
             		  $scope.revokedStatus = "status for "+$scope.checkNumber+" : REVOKED";
