@@ -37,6 +37,12 @@
 			templateUrl: 'app/components/certificate/certificate.html',
 			controller: 'certificateController',
 			controllerAs: 'crc'
+		})
+		.state('core.upload', {
+			url: 'upload',
+			templateUrl: 'app/components/upload/upload.html',
+			controller: 'uploadController',
+			controllerAs: 'uc'
 		});
 		
     }]);

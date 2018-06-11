@@ -2,7 +2,6 @@ package besp.controller;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.security.Principal;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +18,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import besp.Model.Korisnik;
-import besp.Model.Enums.Role;
 import besp.certificate.CertificateDTO;
 import besp.dto.StringDTO;
 import besp.service.CertificateService;
 import besp.service.KeyStoreService;
 import besp.service.KorisnikService;
+import besp.service.UploadService;
 
 
 @RestController
@@ -41,6 +40,8 @@ public class CertificateController {
 
     @Autowired
     private KeyStoreService keyStoreService;
+    @Autowired
+    private UploadService uploadService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<CertificateDTO>> getCerticatesAll() {
@@ -62,7 +63,18 @@ public class CertificateController {
         }
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
-
+    @RequestMapping(value="/upload", method=RequestMethod.POST)
+	public StringDTO uploadAndCreateSF(@RequestBody MultipartFile file) {
+		String savedFileName = null;
+		try {
+			savedFileName = uploadService.store(file);
+			StringDTO retVal = new StringDTO();
+			retVal.setText(savedFileName);
+			return retVal;
+		} catch (Exception e) {			
+		}
+		return null;
+	}
     @RequestMapping(value = "/issuers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<String>> getIssuers() {
         ArrayList<String> issuers = keyStoreService.getIssuers();

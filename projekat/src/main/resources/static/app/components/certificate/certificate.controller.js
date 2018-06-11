@@ -9,6 +9,11 @@
     function certificateController($location, $scope, $rootScope, $http, $window, $cookies, $timeout) {
         var crc = this;
         var init = function (){
+        	if($rootScope.certFile==undefined || $rootScope.certFile==""){
+        		$location.path("upload");
+        		return;
+        	}
+        		
         	$scope.self=false;
         	$scope.status = "";
         	$scope.showStatus= false;

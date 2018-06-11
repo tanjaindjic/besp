@@ -1,0 +1,24 @@
+<div>
+	<ul class='ulCer'>
+	  <li class='liLogCer'><a class="aCer" ng-click='uc.logOut()'>Log Out</a></li>
+	</ul>
+</div>
+<div>
+	<div>
+		<h2>Upload your KeyStore file</h2>
+		<table>		
+			<tr>
+				<td width='10%'></td>
+				<td width='90%'><input type="file" id="myFile" demo-file-model="myFile" accept=".jks, .JKS" required/><td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" value="Upload" ng-click="uc.uploadFile()"/><br><hr /></td>
+			</tr>
+			<tr ng-show='showW'>
+				<td></td>
+				<td>{{message}}</td>
+			</tr>			
+		</table>
+	</div>
+</div>
