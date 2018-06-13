@@ -1,5 +1,6 @@
 package besp.service;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -15,6 +16,15 @@ public class UploadService {
 	public String store(MultipartFile file) {
 		String fileName = null;
 		try {
+			//dodatno
+			File folder = new File(rootLocation.toString());
+			for (final File fileEntry : folder.listFiles()) {
+		        if (fileEntry.toString().endsWith(".jks")) {
+		        	fileEntry.delete();
+		        } 
+		    }
+			//kraj
+			
 			fileName = file.getOriginalFilename();
 			if(!(fileName.endsWith(".JKS")|| fileName.endsWith(".jks"))) {
 				return fileName;

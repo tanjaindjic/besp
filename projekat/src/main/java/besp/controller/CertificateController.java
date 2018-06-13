@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import besp.certificate.CertificateDTO;
+import besp.certificate.CertificateInfo;
 import besp.dto.StringDTO;
 import besp.service.CertificateService;
 import besp.service.KeyStoreService;
@@ -70,7 +71,17 @@ public class CertificateController {
 			savedFileName = uploadService.store(file);
 			StringDTO retVal = new StringDTO();
 			retVal.setText(savedFileName);
+			CertificateInfo.getInstance().setPath(savedFileName);
 			return retVal;
+		} catch (Exception e) {			
+		}
+		return null;
+	}
+    @RequestMapping(value="/pass", method=RequestMethod.POST)
+	public StringDTO certPass(@RequestBody StringDTO pass) {
+		String savedFileName = null;
+		try {
+			CertificateInfo.getInstance().setPass(pass.getText());
 		} catch (Exception e) {			
 		}
 		return null;
