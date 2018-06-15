@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.xml.bind.DatatypeConverter;
 
@@ -138,25 +139,32 @@ public class CertificateService{
                 return "revoked";
             }
         }
-        X509Certificate certificate = keyStoreService.getCertificate(id);
-        if (certificate == null) {
-            return "undefined";
-        }
-
+        Optional<X509Certificate> certificateV = keyStoreService.getCertificate(id);
+		X509Certificate certificate = null;
+    	if(certificateV.isPresent()){
+    		certificate = certificateV.get();
+    	}
+    	else{
+    		return "undefined";
+    	}
         return "good";
     }
 
     
     public String download(String id) {
-        X509Certificate cert = keyStoreService.getCertificate(id);
-        if (cert == null) {
-            return null;
-        }
+    	Optional<X509Certificate> certificateV = keyStoreService.getCertificate(id);
+		X509Certificate certificate = null;
+    	if(certificateV.isPresent()){
+    		certificate = certificateV.get();
+    	}
+    	else{
+    		return "undefined";
+    	}
         StringWriter sw = new StringWriter();
 
         try {
             sw.write("-----BEGIN CERTIFICATE-----\n");
-            sw.write(DatatypeConverter.printBase64Binary(cert.getEncoded()).replaceAll("(.{64})", "$1\n"));
+            sw.write(DatatypeConverter.printBase64Binary(certificate.getEncoded()).replaceAll("(.{64})", "$1\n"));
             sw.write("\n-----END CERTIFICATE-----\n");
         } catch (CertificateEncodingException e) {
             e.printStackTrace();
@@ -190,7 +198,14 @@ public class CertificateService{
     }
 
     public boolean revoke(String id) {
-        X509Certificate certificate = keyStoreService.getCertificate(id);
+    	Optional<X509Certificate> certificateV = keyStoreService.getCertificate(id);
+		X509Certificate certificate = null;
+    	if(certificateV.isPresent()){
+    		certificate = certificateV.get();
+    	}
+    	else{
+    		return false;
+    	}
         List<X509Certificate> certificates = new ArrayList<>();
 
         try {

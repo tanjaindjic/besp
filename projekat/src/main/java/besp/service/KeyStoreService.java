@@ -30,16 +30,15 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 
 import besp.certificate.CertificateDTO;
+import besp.certificate.CertificateInfo;
 import besp.certificate.IssuerData;
 
 @Service
 public class KeyStoreService{
   //  private static final String PATH_CA = "ksCa.jks";
 	public static final Path rootLocation = Paths.get("src/main/resources/static/assets/");
-	private static final String PATH_CA = findKeyStoreName();
-	private static final String PASSWORD_CA = "passwordCa";
-    private static final String PATH_NONCA = "ksNonCa.jks";
-    private static final String PASSWORD_NONCA = "passwordNonCa";
+	private static String PATH_CA = findKeyStoreName();
+	private static String PASSWORD_CA = setPass();
     private KeyStore keyStore;
     private String keyStoreName = "";
     private String keyStorePassword = "";
@@ -51,7 +50,10 @@ public class KeyStoreService{
             e.printStackTrace();
         }
     }
-
+    
+    public static String setPass(){
+    	return CertificateInfo.getInstance().getPass();
+    }
     private static String findKeyStoreName(){
     	File folder = new File(rootLocation.toString());
     	String fileName = "";
@@ -67,18 +69,17 @@ public class KeyStoreService{
         List<X509Certificate> certificates = new ArrayList<>();
 
         try {
-            for (int i = 0; i < 2; i++) {
-                loadKeyStore(i);
-                Enumeration<String> aliases = keyStore.aliases();
+            loadKeyStore(PATH_CA, PASSWORD_CA);
+            Enumeration<String> aliases = keyStore.aliases();
 
-                while (aliases.hasMoreElements()) {
-                    String alias = aliases.nextElement();
+            while (aliases.hasMoreElements()) {
+                String alias = aliases.nextElement();
 
-                    if (keyStore.isKeyEntry(alias)) {
-                        certificates.add(getCertificate(alias, i).get());
-                    }
+                if (keyStore.isKeyEntry(alias)) {
+                    certificates.add(getCertificate(alias).get());
                 }
             }
+            
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -97,9 +98,9 @@ public class KeyStoreService{
     }
 
     
-    public Optional<X509Certificate> getCertificate(String alias, int i) {
+    public Optional<X509Certificate> getCertificate(String alias) {
         try {
-            loadKeyStore(i);
+            loadKeyStore(PATH_CA, PASSWORD_CA);
             X509Certificate cert = (X509Certificate) keyStore.getCertificate(alias);
             return Optional.ofNullable(cert);
         } catch (Exception e) {
@@ -109,21 +110,6 @@ public class KeyStoreService{
         return null;
     }
 
-    
-    public X509Certificate getCertificate(String alias) {
-        for (int i = 0; i < 2; i++) {
-            loadKeyStore(i);
-            try {
-                X509Certificate cert = (X509Certificate) keyStore.getCertificate(alias);
-                if (cert != null) {
-                    return cert;
-                }
-            } catch (KeyStoreException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
 
     
     public ArrayList<String> getCertficatesSN() {
@@ -137,16 +123,14 @@ public class KeyStoreService{
 
     
     public CertificateDTO getCertificateDTO(String alias) {
-        for (int i = 0; i < 2; i++) {
-            loadKeyStore(i);
-            try {
-                X509Certificate cert = (X509Certificate) keyStore.getCertificate(alias);
-                if (cert != null) {
-                    return new CertificateDTO(cert);
-                }
-            } catch (KeyStoreException e) {
-                e.printStackTrace();
+        loadKeyStore(PATH_CA, PASSWORD_CA);
+        try {
+            X509Certificate cert = (X509Certificate) keyStore.getCertificate(alias);
+            if (cert != null) {
+                return new CertificateDTO(cert);
             }
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -154,15 +138,11 @@ public class KeyStoreService{
 
     
     public void writeCertificate(boolean isCa, Certificate certificate, String alias, PrivateKey pk) {
-        if (isCa) {
-            this.keyStoreName = PATH_CA;
-            this.keyStorePassword = PASSWORD_CA;
-            loadKeyStore(0);
-        } else {
-            loadKeyStore(1);
-            this.keyStoreName = PATH_NONCA;
-            this.keyStorePassword = PASSWORD_NONCA;
-        }
+    	PATH_CA = findKeyStoreName();
+    	setPass();
+        this.keyStoreName = PATH_CA;
+        this.keyStorePassword = PASSWORD_CA;
+        loadKeyStore(PATH_CA, PASSWORD_CA);        
         try {
             keyStore.setCertificateEntry(alias, certificate);
             keyStore.setKeyEntry(alias, pk, keyStorePassword.toCharArray(), new Certificate[]{certificate});
@@ -174,7 +154,7 @@ public class KeyStoreService{
 
     
     public IssuerData readIssuerFromStore(String alias) {
-        loadKeyStore(0);
+        loadKeyStore(PATH_CA, PASSWORD_CA);
         try {
             Certificate cert = keyStore.getCertificate(alias);
             PrivateKey privKey = (PrivateKey) keyStore.getKey(alias, PASSWORD_CA.toCharArray());
@@ -188,7 +168,7 @@ public class KeyStoreService{
 
     
     public ArrayList<String> getIssuers() {
-        loadKeyStore(0);
+        loadKeyStore(PATH_CA, PASSWORD_CA);
         ArrayList<String> issuers = null;
         try {
             Enumeration<String> aliases = keyStore.aliases();
@@ -215,8 +195,6 @@ public class KeyStoreService{
         try {
             keyStore.load(null, PASSWORD_CA.toCharArray());
             saveKeyStore(PATH_CA, PASSWORD_CA.toCharArray());
-            keyStore.load(null, PASSWORD_NONCA.toCharArray());
-            saveKeyStore(PATH_NONCA, PASSWORD_NONCA.toCharArray());
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
@@ -228,22 +206,16 @@ public class KeyStoreService{
 
     
     public void delete(String alias) {
-        for (int i = 0; i < 2; i++) {
-            loadKeyStore(i);
-            try {
-                ArrayList<String> aliases = Collections.list(keyStore.aliases());
-                if (aliases.contains(alias)) {
-                    keyStore.deleteEntry(alias);
-                    if (i == 0) {
-                        saveKeyStore(PATH_CA, PASSWORD_CA.toCharArray());
-                    } else if (i == 1) {
-                        saveKeyStore(PATH_NONCA, PASSWORD_NONCA.toCharArray());
-                    }
-                    return;
-                }
-            } catch (KeyStoreException e) {
-                e.printStackTrace();
+        loadKeyStore(PATH_CA, PASSWORD_CA);
+        try {
+            ArrayList<String> aliases = Collections.list(keyStore.aliases());
+            if (aliases.contains(alias)) {
+                keyStore.deleteEntry(alias);
+                    saveKeyStore(PATH_CA, PASSWORD_CA.toCharArray());                    
+                return;
             }
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
         }
     }
 
@@ -258,6 +230,8 @@ public class KeyStoreService{
     
     public void loadKeyStore(String keyStoreFile, String keyStorePassword) {
         keyStoreFile = keyStoreFile;
+        PASSWORD_CA = setPass();
+        keyStorePassword = PASSWORD_CA;
         try {
             keyStore.load(new FileInputStream(keyStoreFile), keyStorePassword.toCharArray());
         } catch (IOException | NoSuchAlgorithmException | CertificateException e) {
@@ -265,16 +239,6 @@ public class KeyStoreService{
         }
     }
 
-    // i = 0 pristupa se CA keystoru
-    // i = 1 pristupa se NonCA keystoru
-    // i = 2 pristupa se Root keystoru
-    public void loadKeyStore(int i) {
-        if (i == 0) {
-            loadKeyStore(PATH_CA, PASSWORD_CA);
-        } else if (i == 1) {
-            loadKeyStore(PATH_NONCA, PASSWORD_NONCA);
-        }
-    }
 
 }
 
