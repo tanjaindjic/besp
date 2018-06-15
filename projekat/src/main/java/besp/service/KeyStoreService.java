@@ -1,8 +1,12 @@
 package besp.service;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -21,18 +25,19 @@ import java.util.Optional;
 
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 
 import besp.certificate.CertificateDTO;
 import besp.certificate.IssuerData;
 
-/**
- * Created by Ivan V. on 02-Apr-18
- */
 @Service
 public class KeyStoreService{
-    private static final String PATH_CA = "ksCa.jks";
-    private static final String PASSWORD_CA = "passwordCa";
+  //  private static final String PATH_CA = "ksCa.jks";
+	public static final Path rootLocation = Paths.get("src/main/resources/static/assets/");
+	private static final String PATH_CA = findKeyStoreName();
+	private static final String PASSWORD_CA = "passwordCa";
     private static final String PATH_NONCA = "ksNonCa.jks";
     private static final String PASSWORD_NONCA = "passwordNonCa";
     private KeyStore keyStore;
@@ -47,7 +52,17 @@ public class KeyStoreService{
         }
     }
 
-    
+    private static String findKeyStoreName(){
+    	File folder = new File(rootLocation.toString());
+    	String fileName = "";
+		for (final File fileEntry : folder.listFiles()) {
+	        if (fileEntry.toString().endsWith(".jks")) {
+	        	return fileEntry.toString();
+	        } 
+	    }
+		Path filePath = rootLocation.resolve(fileName);
+		return filePath.toString();
+    }
     public List<X509Certificate> getCertificates() {
         List<X509Certificate> certificates = new ArrayList<>();
 

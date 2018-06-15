@@ -84,7 +84,9 @@ public class CertificateController {
 			CertificateInfo.getInstance().setPass(pass.getText());
 		} catch (Exception e) {			
 		}
-		return null;
+		StringDTO ret = new StringDTO();
+		ret.setText("done");
+		return ret;
 	}
     @RequestMapping(value = "/issuers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<String>> getIssuers() {

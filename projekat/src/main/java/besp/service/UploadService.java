@@ -27,7 +27,7 @@ public class UploadService {
 			
 			fileName = file.getOriginalFilename();
 			if(!(fileName.endsWith(".JKS")|| fileName.endsWith(".jks"))) {
-				return fileName;
+				return "";
 			}
 			Path filePath = rootLocation.resolve(fileName);
             Resource resource = new UrlResource(filePath.toUri());

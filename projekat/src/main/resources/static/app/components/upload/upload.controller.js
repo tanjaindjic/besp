@@ -30,13 +30,15 @@
                 headers: {'Content-Type': undefined},
                 data: fileFormData
             }).then(function onSuccess(response) {
+            	$rootScope.certFile=response.data.text;            	
             	$http({
             		method: 'POST',
                     url: 'https://localhost:8096/certificates/pass',
                     data: {"text": $scope.pass}
                 }).then(function onSuccess(response) {
-		        	$rootScope.certFile=response.data.text;
-		        	$location.path("certificate");
+                	if(response.data.text!="done")
+                    	$rootScope.certFile=undefined;
+		        	$location.path("/certificate");
                 });
             }).catch(function onError(response) {
                
